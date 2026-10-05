@@ -173,7 +173,7 @@ const client = new IRLClient({
 
 | Repo | Description |
 |---|---|
-| [IRL-engine-AX](https://github.com/GabrielGauss/IRL-engine-AX) | Core IRL Engine |
+| [irl](https://github.com/macropulse-lab/irl) | Core IRL Engine (FSL-1.1-ALv2) |
 | [irl-sdk-python](https://github.com/GabrielGauss/irl-sdk-python) | Python SDK |
 | [irl-public-docs](https://github.com/GabrielGauss/irl-public-docs) | Public documentation hub |
 | [macropulse](https://github.com/GabrielGauss/macropulse) | MacroPulse — MTA operator |
