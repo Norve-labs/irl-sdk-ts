@@ -4,7 +4,7 @@
   <img src=".github/brand/logo-green.svg" alt="MacroPulse" width="72" height="72">
 </picture>
 
-<sub>Part of the <a href="https://github.com/GabrielGauss/macropulse-platform">MacroPulse platform</a></sub>
+<sub>Part of the <a href="https://github.com/macropulse-lab/macropulse-platform">MacroPulse platform</a></sub>
 </div>
 
 # irl-sdk
@@ -174,19 +174,20 @@ const client = new IRLClient({
 | Repo | Description |
 |---|---|
 | [irl](https://github.com/macropulse-lab/irl) | Core IRL Engine (FSL-1.1-ALv2) |
-| [irl-sdk-python](https://github.com/GabrielGauss/irl-sdk-python) | Python SDK |
-| [irl-public-docs](https://github.com/GabrielGauss/irl-public-docs) | Public documentation hub |
-| [macropulse](https://github.com/GabrielGauss/macropulse) | MacroPulse — MTA operator |
+| [irl-gateway](https://github.com/macropulse-lab/irl-gateway) | MCP server: AI agents trade through IRL (`pip install irl-gateway`) |
+| [irl-sdk-python](https://github.com/macropulse-lab/irl-sdk-python) | Python SDK |
+| [irl-public-docs](https://github.com/macropulse-lab/irl-public-docs) | Public documentation hub |
+| [macropulse](https://macropulse.live) | MacroPulse — MTA operator |
 
 ## Links
 
 - [IRL Engine product page](https://macropulse.live/irl)
-- [Developer Guide](https://github.com/GabrielGauss/irl-public-docs/blob/master/docs/developer-guide.md)
+- [Developer Guide](https://github.com/macropulse-lab/irl-public-docs/blob/master/docs/developer-guide.md)
 - [Live Sandbox + Swagger UI](https://irl.macropulse.live/swagger-ui/)
 - [Python SDK on PyPI](https://pypi.org/project/irl-sdk/)
 
 ---
 
 <div align="center">
-<sub>Part of the <a href="https://github.com/GabrielGauss/macropulse-platform">MacroPulse platform</a> · <a href="https://macropulse.live">macropulse.live</a> · <a href="https://macropulse.live/irl">IRL Engine</a></sub>
+<sub>Part of the <a href="https://github.com/macropulse-lab/macropulse-platform">MacroPulse platform</a> · <a href="https://macropulse.live">macropulse.live</a> · <a href="https://macropulse.live/irl">IRL Engine</a></sub>
 </div>

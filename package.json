@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GabrielGauss/irl-sdk-ts.git"
+    "url": "git+https://github.com/macropulse-lab/irl-sdk-ts.git"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
