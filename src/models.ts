@@ -75,8 +75,9 @@ export interface IRLClientOptions {
   /** Bearer token issued via IRL Engine admin. */
   apiToken: string;
   /**
-   * Base URL of the MacroPulse MTA for heartbeat fetch.
-   * Defaults to "https://api.macropulse.live".
+   * Base URL of a regime operator (MTA) for Layer 2 heartbeats. Set it only
+   * when your IRL server runs with LAYER2_ENABLED=true. Unset (the default)
+   * sends no heartbeat, for servers with MTA_MODE=none (agent caps only).
    */
   mtaUrl?: string;
   /** Fetch timeout in milliseconds. Defaults to 5000. */
