@@ -173,16 +173,16 @@ const client = new IRLClient({
 
 | Repo | Description |
 |---|---|
-| [irl](https://github.com/macropulse-lab/irl) | Core IRL Engine (FSL-1.1-ALv2) |
-| [irl-gateway](https://github.com/macropulse-lab/irl-gateway) | MCP server: AI agents trade through IRL (`pip install irl-gateway`) |
-| [irl-sdk-python](https://github.com/macropulse-lab/irl-sdk-python) | Python SDK |
-| [irl-public-docs](https://github.com/macropulse-lab/irl-public-docs) | Public documentation hub |
+| [irl](https://github.com/horkos-labs/irl) | Core IRL Engine (FSL-1.1-ALv2) |
+| [irl-gateway](https://github.com/horkos-labs/irl-gateway) | MCP server: AI agents trade through IRL (`pip install irl-gateway`) |
+| [irl-sdk-python](https://github.com/horkos-labs/irl-sdk-python) | Python SDK |
+| [irl-public-docs](https://github.com/horkos-labs/irl-public-docs) | Public documentation hub |
 | [macropulse](https://macropulse.live) | MacroPulse — MTA operator |
 
 ## Links
 
 - [IRL Engine product page](https://macropulse.live/irl)
-- [Developer Guide](https://github.com/macropulse-lab/irl-public-docs/blob/master/docs/developer-guide.md)
+- [Developer Guide](https://github.com/horkos-labs/irl-public-docs/blob/master/docs/developer-guide.md)
 - [Live Sandbox + Swagger UI](https://irl.macropulse.live/swagger-ui/)
 - [Python SDK on PyPI](https://pypi.org/project/irl-sdk/)
 

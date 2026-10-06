@@ -33,5 +33,5 @@ Follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and [Semantic V
 - End-to-end example (`examples/demo_e2e.ts`) against the public sandbox
 - Full error code documentation
 
-[0.2.0]: https://github.com/macropulse-lab/irl-sdk-ts/releases/tag/v0.2.0
-[0.1.0]: https://github.com/macropulse-lab/irl-sdk-ts/releases/tag/v0.1.0
+[0.2.0]: https://github.com/horkos-labs/irl-sdk-ts/releases/tag/v0.2.0
+[0.1.0]: https://github.com/horkos-labs/irl-sdk-ts/releases/tag/v0.1.0
