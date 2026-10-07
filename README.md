@@ -36,7 +36,7 @@ Node.js ≥ 18 required (uses native `fetch` and `AbortSignal.timeout`).
 import { IRLClient } from "irl-sdk";
 
 const client = new IRLClient({
-  irlUrl: "https://irl.macropulse.live",
+  irlUrl: "https://norve.dev",
   apiToken: process.env.IRL_API_TOKEN!,
 });
 
@@ -157,7 +157,7 @@ If the IRL Engine runs with `MTA_MODE=none` (the public server does), only the a
 
 ```ts
 const client = new IRLClient({
-  irlUrl: "https://irl.macropulse.live",
+  irlUrl: "https://norve.dev",
   apiToken: "your-token",
 });
 ```
@@ -178,11 +178,11 @@ const client = new IRLClient({
 
 - [IRL Engine product page](https://macropulse.live/irl)
 - [Developer Guide](https://github.com/norve-labs/irl-public-docs/blob/master/docs/developer-guide.md)
-- [Live Sandbox + Swagger UI](https://irl.macropulse.live/swagger-ui/)
+- [Live Sandbox + Swagger UI](https://norve.dev/swagger-ui/)
 - [Python SDK on PyPI](https://pypi.org/project/irl-sdk/)
 
 ---
 
 <div align="center">
-<sub>IRL by <a href="https://github.com/norve-labs">Norve</a> · <a href="https://irl.macropulse.live">irl.macropulse.live</a></sub>
+<sub>IRL by <a href="https://github.com/norve-labs">Norve</a> · <a href="https://norve.dev">norve.dev</a></sub>
 </div>
