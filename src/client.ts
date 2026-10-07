@@ -44,7 +44,7 @@ export class IRLClient {
 
   constructor(options: IRLClientOptions) {
     this.irlUrl = options.irlUrl.replace(/\/$/, "");
-    this.mtaUrl = (options.mtaUrl ?? "https://api.macropulse.live").replace(/\/$/, "");
+    this.mtaUrl = (options.mtaUrl ?? "").replace(/\/$/, "");
     this.headers = {
       Authorization: `Bearer ${options.apiToken}`,
       "Content-Type": "application/json",
@@ -55,17 +55,18 @@ export class IRLClient {
   }
 
   /**
-   * Fetch a fresh heartbeat and submit a trade intent for authorization.
+   * Submit a trade intent for authorization.
    *
-   * The heartbeat is fetched automatically — do NOT cache or reuse heartbeats
-   * across calls. Each authorize request must carry a fresh heartbeat to satisfy
-   * the L2 anti-replay invariant.
+   * When `mtaUrl` is set, a fresh signed heartbeat is fetched from that regime
+   * operator first and attached (L2 anti-replay; never cache or reuse one).
+   * Without `mtaUrl` no heartbeat is sent, as IRL servers with no regime
+   * operator (`MTA_MODE=none`) expect.
    *
    * @throws {IRLError} on 4xx/5xx responses from the IRL Engine
-   * @throws {IRLHeartbeatError} if the heartbeat fetch fails
+   * @throws {IRLHeartbeatError} if an MTA is configured and the heartbeat fetch fails
    */
   async authorize(req: AuthorizeRequest): Promise<AuthorizeResult> {
-    const heartbeat = await this.fetchHeartbeat();
+    const heartbeat = this.mtaUrl ? await this.fetchHeartbeat() : undefined;
 
     const body = this.buildBody(req, heartbeat);
 
@@ -144,8 +145,9 @@ export class IRLClient {
     return resp.json() as Promise<Record<string, unknown>>;
   }
 
-  /** Fetch the latest signed heartbeat from the MacroPulse MTA. */
+  /** Fetch the latest signed heartbeat from the configured regime operator (MTA). */
   async fetchHeartbeat(): Promise<Heartbeat> {
+    if (!this.mtaUrl) throw new IRLHeartbeatError(0, "no mtaUrl configured");
     const resp = await this.fetch(`${this.mtaUrl}/v1/irl/heartbeat`, {
       headers: {},   // no auth needed for heartbeat
     });
@@ -159,7 +161,7 @@ export class IRLClient {
   /** No-op — included for symmetry with Python SDK's async context manager. */
   async close(): Promise<void> {}
 
-  private buildBody(req: AuthorizeRequest, heartbeat: Heartbeat): Record<string, unknown> {
+  private buildBody(req: AuthorizeRequest, heartbeat: Heartbeat | undefined): Record<string, unknown> {
     const action = serializeAction(req.action, req.quantity);
 
     const body: Record<string, unknown> = {
@@ -180,8 +182,8 @@ export class IRLClient {
       reduce_only: req.reduce_only ?? false,
       client_order_id: req.client_order_id ?? "",
       agent_valid_time: req.agent_valid_time ?? Date.now(),
-      heartbeat,
     };
+    if (heartbeat !== undefined) body["heartbeat"] = heartbeat;
 
     if (req.limit_price !== undefined) body["limit_price"] = req.limit_price;
     if (req.stop_price !== undefined) body["stop_price"] = req.stop_price;

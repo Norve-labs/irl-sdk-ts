@@ -219,3 +219,51 @@ describe("IRLClient.bindExecution", () => {
     );
   });
 });
+
+describe("IRLClient without a regime operator", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn());
+  });
+
+  const order = {
+    agent_id: "agent-uuid",
+    model_id: "model-v1",
+    model_hash_hex: "a".repeat(64),
+    action: "Long" as const,
+    asset: "BTC-USD",
+    venue_id: "CBSE",
+    quantity: 0.1,
+    notional: 6500,
+  };
+
+  it.each([undefined, ""])("with mtaUrl %j it posts once and sends no heartbeat", async (mtaUrl) => {
+    const mockFetch = vi.mocked(fetch);
+    mockFetch.mockResolvedValueOnce(new Response(JSON.stringify(MOCK_AUTHORIZE_RESPONSE), { status: 200 }));
+
+    const client = new IRLClient({ irlUrl: "https://irl.example.com", apiToken: "t", mtaUrl });
+    const result = await client.authorize(order);
+
+    expect(result.authorized).toBe(true);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit];
+    expect(url).toContain("/irl/authorize");
+    expect(JSON.parse(init.body as string)).not.toHaveProperty("heartbeat");
+  });
+
+  it("with mtaUrl it attaches the fetched heartbeat", async () => {
+    const mockFetch = vi.mocked(fetch);
+    mockFetch
+      .mockResolvedValueOnce(new Response(JSON.stringify(MOCK_HEARTBEAT), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify(MOCK_AUTHORIZE_RESPONSE), { status: 200 }));
+
+    await makeClient().authorize(order);
+
+    const [, init] = mockFetch.mock.calls[1] as [string, RequestInit];
+    expect(JSON.parse(init.body as string).heartbeat).toEqual(MOCK_HEARTBEAT);
+  });
+
+  it("fetchHeartbeat refuses to guess an operator", async () => {
+    const client = new IRLClient({ irlUrl: "https://irl.example.com", apiToken: "t" });
+    await expect(client.fetchHeartbeat()).rejects.toBeInstanceOf(IRLHeartbeatError);
+  });
+});

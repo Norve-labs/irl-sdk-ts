@@ -5,6 +5,15 @@ Follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and [Semantic V
 
 ---
 
+## [0.3.0] — unreleased
+
+### Changed
+- **`mtaUrl` has no default** (was `https://api.macropulse.live`). Without it `authorize()` fetches and sends no heartbeat, for IRL servers with no regime operator (`MTA_MODE=none`). Set `mtaUrl` to keep the 0.2.0 behaviour. `""` now really disables the fetch, as 0.2.0's notes said.
+- `fetchHeartbeat()` throws `IRLHeartbeatError` when no `mtaUrl` is configured instead of guessing one.
+
+### Added
+- Retries with backoff, `parent_trace_id` linking, extended order types (already in the code and README; first npm release with them).
+
 ## [0.2.0] — 2026-04-14
 
 ### Added

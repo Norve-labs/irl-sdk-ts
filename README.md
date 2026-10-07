@@ -13,6 +13,7 @@ TypeScript/JavaScript SDK for the [IRL Engine](https://macropulse.live/irl) — 
 
 ## What's new in 0.3.0
 
+- **No regime operator by default**: `mtaUrl` no longer defaults to `api.macropulse.live`. Without it, `authorize()` sends no heartbeat, which is what IRL servers with `MTA_MODE=none` (agent caps only) expect. Set `mtaUrl` only for a server with `LAYER2_ENABLED=true`.
 - **Retry + backoff**: All API calls retry on 5xx with exponential backoff. Configure via `maxRetries` (default: 3) and `backoffBaseMs` (default: 500 ms).
 - **Multi-agent linking**: `AuthorizeRequest.parent_trace_id` connects sub-agent calls to orchestrators. `getTraceChain()` returns the full causal ancestry.
 - **Extended order types**: `OrderType` union expanded with `VWAP`, `IOC`, `FOK`, `POST_ONLY`, `PEGGED`, `TRAILING_STOP`, `ICEBERG`.
@@ -39,7 +40,7 @@ const client = new IRLClient({
   apiToken: process.env.IRL_API_TOKEN!,
 });
 
-// 1. Authorize a trade intent — fetches a fresh heartbeat automatically
+// 1. Authorize a trade intent (attaches a fresh heartbeat only if you set mtaUrl)
 const result = await client.authorize({
   agent_id: "550e8400-e29b-41d4-a716-446655440000",
   model_id: "btc-momentum-v2",
@@ -82,14 +83,14 @@ await client.close();
 |--------|------|----------|-------------|
 | `irlUrl` | `string` | Yes | IRL Engine base URL |
 | `apiToken` | `string` | Yes | Bearer token from IRL admin |
-| `mtaUrl` | `string` | No | MTA base URL (default: `https://api.macropulse.live`) |
+| `mtaUrl` | `string` | No | Regime operator (MTA) base URL for Layer 2 heartbeats. Unset (default): no heartbeat is sent. |
 | `timeoutMs` | `number` | No | Request timeout in ms (default: `5000`) |
 | `maxRetries` | `number` | No | Max retries on 5xx (default: `3`) |
 | `backoffBaseMs` | `number` | No | Base delay for exponential backoff in ms (default: `500`) |
 
 ### `client.authorize(req)` → `Promise<AuthorizeResult>`
 
-Fetches a fresh heartbeat and submits the trade intent.
+Submits the trade intent, with a fresh heartbeat first when `mtaUrl` is set.
 
 **`AuthorizeRequest`** key fields:
 
@@ -139,7 +140,7 @@ try {
   const result = await client.authorize(req);
 } catch (err) {
   if (err instanceof IRLHeartbeatError) {
-    // MTA heartbeat fetch failed — check api.macropulse.live
+    // heartbeat fetch from your mtaUrl failed
   } else if (err instanceof IRLError) {
     console.error(err.status, err.body);  // 4xx/5xx from IRL Engine
   }
@@ -148,17 +149,16 @@ try {
 
 ## Layer 2 anti-replay
 
-The client fetches a fresh heartbeat before every `authorize` call. **Do not cache or reuse heartbeats** — each must be consumed once. Reuse will result in a `HEARTBEAT_REPLAY` rejection from the engine.
+With `mtaUrl` set, the client fetches a fresh heartbeat before every `authorize` call. **Do not cache or reuse heartbeats** — each must be consumed once. Reuse will result in a `HEARTBEAT_REPLAY` rejection from the engine.
 
 ## MtaMode::None
 
-If the IRL Engine is deployed with `MTA_MODE=none`, heartbeat fetching is skipped by the engine but the client still sends one. For `none`-mode deployments you can call the engine directly without configuring `mtaUrl`:
+If the IRL Engine runs with `MTA_MODE=none` (the public server does), only the agent's own mandate applies and no heartbeat is needed. Leave `mtaUrl` unset:
 
 ```ts
 const client = new IRLClient({
-  irlUrl: "https://your-private-irl-deployment.internal",
+  irlUrl: "https://irl.macropulse.live",
   apiToken: "your-token",
-  mtaUrl: "https://api.macropulse.live",  // still fetched; engine ignores it in none mode
 });
 ```
 
