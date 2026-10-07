@@ -1,0 +1,33 @@
+name: Release
+
+# Push a tag like v0.3.0 -> test, build, publish to npm with Trusted
+# Publishing (GitHub OIDC; no stored token, provenance attached). npm side:
+# package irl-sdk -> Settings -> Trusted Publisher -> GitHub Actions,
+# organization norve-labs, repository irl-sdk-ts, workflow release.yml.
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: read
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+      - name: Tag matches package version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION=$(node -p "require('./package.json').version")
+          test "$TAG" = "$VERSION" || { echo "tag $TAG != package.json $VERSION"; exit 1; }
+      - run: npm install -g npm@latest   # trusted publishing needs npm >= 11.5
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm publish --access public
