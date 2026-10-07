@@ -1,5 +1,5 @@
 <div align="center">
-<sub>IRL by <a href="https://github.com/horkos-labs">Horkos Labs</a></sub>
+<sub>IRL by <a href="https://github.com/norve-labs">Norve</a></sub>
 </div>
 
 # irl-sdk
@@ -168,21 +168,21 @@ const client = new IRLClient({
 
 | Repo | Description |
 |---|---|
-| [irl](https://github.com/horkos-labs/irl) | Core IRL Engine (FSL-1.1-ALv2) |
-| [irl-gateway](https://github.com/horkos-labs/irl-gateway) | MCP server: AI agents trade through IRL (`pip install irl-gateway`) |
-| [irl-sdk-python](https://github.com/horkos-labs/irl-sdk-python) | Python SDK |
-| [irl-public-docs](https://github.com/horkos-labs/irl-public-docs) | Public documentation hub |
+| [irl](https://github.com/norve-labs/irl) | Core IRL Engine (FSL-1.1-ALv2) |
+| [irl-gateway](https://github.com/norve-labs/irl-gateway) | MCP server: AI agents trade through IRL (`pip install irl-gateway`) |
+| [irl-sdk-python](https://github.com/norve-labs/irl-sdk-python) | Python SDK |
+| [irl-public-docs](https://github.com/norve-labs/irl-public-docs) | Public documentation hub |
 | [macropulse](https://macropulse.live) | MacroPulse — MTA operator |
 
 ## Links
 
 - [IRL Engine product page](https://macropulse.live/irl)
-- [Developer Guide](https://github.com/horkos-labs/irl-public-docs/blob/master/docs/developer-guide.md)
+- [Developer Guide](https://github.com/norve-labs/irl-public-docs/blob/master/docs/developer-guide.md)
 - [Live Sandbox + Swagger UI](https://irl.macropulse.live/swagger-ui/)
 - [Python SDK on PyPI](https://pypi.org/project/irl-sdk/)
 
 ---
 
 <div align="center">
-<sub>IRL by <a href="https://github.com/horkos-labs">Horkos Labs</a> · <a href="https://irl.macropulse.live">irl.macropulse.live</a></sub>
+<sub>IRL by <a href="https://github.com/norve-labs">Norve</a> · <a href="https://irl.macropulse.live">irl.macropulse.live</a></sub>
 </div>
