@@ -6,7 +6,7 @@
  * import { IRLClient } from "irl-sdk";
  *
  * const client = new IRLClient({
- *   irlUrl: "https://irl.macropulse.live",
+ *   irlUrl: "https://norve.dev",
  *   apiToken: process.env.IRL_API_TOKEN!,
  * });
  *

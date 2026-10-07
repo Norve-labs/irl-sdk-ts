@@ -70,7 +70,7 @@ export interface Heartbeat {
 }
 
 export interface IRLClientOptions {
-  /** Base URL of the IRL Engine (e.g. "https://irl.macropulse.live"). */
+  /** Base URL of the IRL Engine (e.g. "https://norve.dev"). */
   irlUrl: string;
   /** Bearer token issued via IRL Engine admin. */
   apiToken: string;
